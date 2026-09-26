@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+.DS_Store
+*.webm
+raw_recording.webm
+concat_list.txt
+scene*.mp3
+node_modules/
+.vercel/

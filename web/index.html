@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KithMed — Zero-Connectivity Field Triage & Uncertainty-Bounded Clinical Decision Engine</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="theme-sunlight">
+  <!-- Header Bar -->
+  <header class="tactical-header">
+    <div class="header-left">
+      <div class="logo-mark">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M19.07 4.93L4.93 19.07"/>
+        </svg>
+      </div>
+      <div>
+        <div class="brand-title">KITHMED <span class="brand-sub">FIELD DECISION ENGINE</span></div>
+        <div class="brand-status"><span class="pulse-dot"></span> ZERO-CONNECTIVITY OFFLINE MODE ACTIVE &bull; ML-EMPOWERED CLINICAL TRIAGE</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <button id="themeToggle" class="tactical-btn" title="Toggle High-Contrast / Night Mode">
+        <span id="themeIcon">☀️ SUNLIGHT MODE</span>
+      </button>
+      <button id="audioToggle" class="tactical-btn alert-audio-btn" title="Toggle Audio Alarms">
+        <span id="audioIcon">🔊 AUDIO ALARMS ON</span>
+      </button>
+      <button id="resetBtn" class="tactical-btn secondary">RESET</button>
+    </div>
+  </header>
+
+  <main class="console-layout">
+    <!-- Left Column: Patient Telemetry & Input -->
+    <section class="telemetry-panel">
+      <div class="panel-header">
+        <h2>PATIENT TELEMETRY & CLINICAL PARAMETERS</h2>
+        <div class="preset-selector">
+          <label>CASE PRESETS:</label>
+          <select id="casePreset">
+            <option value="sepsis">1. Severe Sepsis / Septic Shock (High Risk)</option>
+            <option value="trauma">2. Traumatic Hemorrhagic Shock (SI &gt; 1.1)</option>
+            <option value="respiratory">3. Acute Hypoxic Respiratory Failure</option>
+            <option value="boundary">4. Conformal Uncertainty Boundary (Pediatric)</option>
+            <option value="routine">5. Routine Baseline Ambulatory</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="patient-id-row">
+        <div class="field-group">
+          <label>PATIENT ID / TAG</label>
+          <input type="text" id="patientId" value="KM-FIELD-704">
+        </div>
+        <div class="field-group">
+          <label>AGE (YRS)</label>
+          <input type="number" id="patientAge" value="54" min="0" max="120">
+        </div>
+        <div class="field-group check-group">
+          <label>PREGNANT</label>
+          <input type="checkbox" id="isPregnant">
+        </div>
+        <div class="field-group check-group">
+          <label>ON O2</label>
+          <input type="checkbox" id="onOxygen">
+        </div>
+      </div>
+
+      <div class="field-group full-width">
+        <label>CHIEF COMPLAINT & SYMPTOM PROFILE</label>
+        <input type="text" id="chiefComplaint" value="High fever, rigorous chills, confusion, and tachypnea">
+      </div>
+
+      <!-- Vital Sliders & Inputs -->
+      <div class="vitals-grid">
+        <!-- Heart Rate -->
+        <div class="vital-card">
+          <div class="vital-top">
+            <span class="vital-name">HEART RATE</span>
+            <span class="vital-unit">BPM</span>
+          </div>
+          <div class="vital-val-display" id="val_hr">124</div>
+          <input type="range" id="input_hr" min="30" max="200" value="124" class="vital-slider">
+          <div class="vital-scale"><span>30</span><span>Normal (60-100)</span><span>200</span></div>
+        </div>
+
+        <!-- Systolic BP -->
+        <div class="vital-card">
+          <div class="vital-top">
+            <span class="vital-name">SYSTOLIC BP</span>
+            <span class="vital-unit">mmHg</span>
+          </div>
+          <div class="vital-val-display" id="val_sbp">88</div>
+          <input type="range" id="input_sbp" min="50" max="240" value="88" class="vital-slider">
+          <div class="vital-scale"><span>50</span><span>Normal (90-120)</span><span>240</span></div>
+        </div>
+
+        <!-- Diastolic BP -->
+        <div class="vital-card">
+          <div class="vital-top">
+            <span class="vital-name">DIASTOLIC BP</span>
+            <span class="vital-unit">mmHg</span>
+          </div>
+          <div class="vital-val-display" id="val_dbp">54</div>
+          <input type="range" id="input_dbp" min="30" max="140" value="54" class="vital-slider">
+          <div class="vital-scale"><span>30</span><span>Normal (60-80)</span><span>140</span></div>
+        </div>
+
+        <!-- Respiratory Rate -->
+        <div class="vital-card">
+          <div class="vital-top">
+            <span class="vital-name">RESPIRATORY RATE</span>
+            <span class="vital-unit">BPM</span>
+          </div>
+          <div class="vital-val-display" id="val_rr">26</div>
+          <input type="range" id="input_rr" min="6" max="50" value="26" class="vital-slider">
+          <div class="vital-scale"><span>6</span><span>Normal (12-20)</span><span>50</span></div>
+        </div>
+
+        <!-- SpO2 -->
+        <div class="vital-card">
+          <div class="vital-top">
+            <span class="vital-name">OXYGEN SATURATION</span>
+            <span class="vital-unit">SpO2 %</span>
+          </div>
+          <div class="vital-val-display" id="val_spo2">91</div>
+          <input type="range" id="input_spo2" min="60" max="100" value="91" class="vital-slider">
+          <div class="vital-scale"><span>60</span><span>Normal (95-100)</span><span>100</span></div>
+        </div>
+
+        <!-- Temperature -->
+        <div class="vital-card">
+          <div class="vital-top">
+            <span class="vital-name">CORE TEMP</span>
+            <span class="vital-unit">°C</span>
+          </div>
+          <div class="vital-val-display" id="val_temp">39.5</div>
+          <input type="range" id="input_temp" min="33.0" max="42.0" step="0.1" value="39.5" class="vital-slider">
+          <div class="vital-scale"><span>33°C</span><span>Normal (36.5-37.5)</span><span>42°C</span></div>
+        </div>
+
+        <!-- Glasgow Coma Scale -->
+        <div class="vital-card full-span">
+          <div class="vital-top">
+            <span class="vital-name">GLASGOW COMA SCALE (GCS)</span>
+            <span class="vital-unit">Score (3-15)</span>
+          </div>
+          <div class="vital-val-display" id="val_gcs">13</div>
+          <input type="range" id="input_gcs" min="3" max="15" value="13" class="vital-slider">
+          <div class="vital-scale"><span>3 (Deep Coma)</span><span>15 (Fully Alert)</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Right Column: Live Decision & Uncertainty Bounding Engine Output -->
+    <section class="decision-panel">
+      <!-- Main Triage Banner -->
+      <div class="triage-status-banner" id="triageBanner">
+        <div class="banner-badge" id="triageBadge">CRITICAL &bull; RED</div>
+        <div class="banner-desc" id="triageDesc">Immediate Resuscitation Required — Physiologic Collapse Threat</div>
+      </div>
+
+      <!-- Core Clinical Indices Matrix -->
+      <div class="indices-matrix">
+        <div class="index-box">
+          <div class="index-label">NEWS2 SCORE</div>
+          <div class="index-score" id="score_news2">16<span class="sub-denom">/20</span></div>
+          <div class="index-interp" id="interp_news2">Extreme Clinical Risk</div>
+        </div>
+        <div class="index-box">
+          <div class="index-label">qSOFA SCORE</div>
+          <div class="index-score" id="score_qsofa">3<span class="sub-denom">/3</span></div>
+          <div class="index-interp" id="interp_qsofa">High Sepsis Mortality Risk</div>
+        </div>
+        <div class="index-box">
+          <div class="index-label">SHOCK INDEX</div>
+          <div class="index-score" id="score_si">1.41</div>
+          <div class="index-interp" id="interp_si">Overt Hemodynamic Collapse</div>
+        </div>
+        <div class="index-box">
+          <div class="index-label">PRIMARY PROTOCOL</div>
+          <div class="index-score-text" id="score_protocol">SEPSIS & INFECTION</div>
+          <div class="index-interp" id="interp_escalation">MANDATORY PHYSICIAN ESCALATION</div>
+        </div>
+      </div>
+
+      <!-- Conformal Uncertainty Bounding Gauge -->
+      <div class="uncertainty-card">
+        <div class="uncertainty-header">
+          <div>
+            <div class="u-title">CONFORMAL UNCERTAINTY QUANTIFICATION</div>
+            <div class="u-subtitle">Epistemic ambiguity bounds for field healthcare worker safety</div>
+          </div>
+          <div class="u-score-tag" id="val_uncertainty">5% BOUND</div>
+        </div>
+        <div class="u-bar-track">
+          <div class="u-bar-fill" id="uncertaintyBar" style="width: 5%;"></div>
+        </div>
+        <div class="u-bar-labels">
+          <span>0% Deterministic Confidence</span>
+          <span>&gt;35% Mandatory Physician Tele-Consult</span>
+          <span>100% Ambiguous</span>
+        </div>
+      </div>
+
+      <!-- Clinical Findings & Actions -->
+      <div class="actions-container">
+        <div class="action-column">
+          <h3 class="column-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            KEY CLINICAL FINDINGS
+          </h3>
+          <ul id="findingsList" class="findings-list"></ul>
+        </div>
+        <div class="action-column">
+          <h3 class="column-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            ACTIONABLE CLINICAL INTERVENTIONS
+          </h3>
+          <ul id="interventionsList" class="interventions-list"></ul>
+        </div>
+      </div>
+
+      <!-- Action Footer -->
+      <div class="panel-footer">
+        <button id="exportPassBtn" class="primary-action-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          EXPORT CLINICAL TRIAGE CARD (OFFLINE PASS)
+        </button>
+        <button id="copyJsonBtn" class="secondary-action-btn">
+          COPY JSON TELEMETRY
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Offline Pass Modal -->
+  <div id="passModal" class="modal-overlay hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>OFFLINE FIELD TRIAGE PASS</h3>
+        <button id="closeModalBtn" class="close-btn">&times;</button>
+      </div>
+      <div class="modal-body" id="modalContent"></div>
+      <div class="modal-footer">
+        <button id="printBtn" class="tactical-btn">PRINT PASS</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

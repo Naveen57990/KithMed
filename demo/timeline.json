@@ -1,0 +1,40 @@
+{
+  "total_duration": 86.952,
+  "scenes": [
+    {
+      "id": "scene1_intro",
+      "text": "In humanitarian crisis zones and remote rural clinics, front-line health workers must make critical triage decisions in seconds without internet connectivity. Meet KithMed: a zero-connectivity clinical decision engine that brings uncertainty-bounded machine intelligence directly to the edge.",
+      "start": 0.0,
+      "end": 18.77,
+      "duration": 18.77
+    },
+    {
+      "id": "scene2_sepsis",
+      "text": "KithMed combines validated clinical risk models including NHS NEWS2, Sepsis-3 quick SOFA, and the Shock Index. Here, evaluating a septic shock patient with high fever and tachypnea, KithMed instantly flags a critical RED status, triggers sepsis bundles, and alerts the operator.",
+      "start": 18.77,
+      "end": 38.74,
+      "duration": 19.97
+    },
+    {
+      "id": "scene3_trauma",
+      "text": "When switching to acute trauma, KithMed continuously evaluates occult hypoperfusion. Even before systolic blood pressure collapses, a Shock Index above 1.1 alerts the field medic to impending hemorrhagic decompensation and recommends rapid large-bore IV access.",
+      "start": 38.74,
+      "end": 56.5,
+      "duration": 17.76
+    },
+    {
+      "id": "scene4_uncertainty",
+      "text": "Crucially, KithMed introduces conformal uncertainty bounding. When vital telemetry lies right on fragile decision boundaries or in vulnerable pediatric patients, KithMed refuses to guess and mandates immediate physician tele-consultation.",
+      "start": 56.5,
+      "end": 72.1,
+      "duration": 15.6
+    },
+    {
+      "id": "scene5_pass_closing",
+      "text": "Frontline workers can generate cryptographic offline triage passes for patient transfer and run bulk field assessments via the tactical terminal CLI. KithMed is open source, private, and engineered to save lives everywhere.",
+      "start": 72.1,
+      "end": 86.95,
+      "duration": 14.86
+    }
+  ]
+}
